@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Confetti from 'react-confetti'
-
-// Components
+import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Card from './components/Card'
 import Modal from './components/Modal'
@@ -34,61 +33,48 @@ function App() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const sections = [
-    { id: 'home', label: 'Home', emoji: '🏠' },
-    { id: 'gallery', label: 'Gallery', emoji: '📸' },
-    { id: 'memories', label: 'Memories', emoji: '💫' },
-    { id: 'wishes', label: 'Wishes', emoji: '💝' },
-  ]
-
   const cards = [
     {
       id: 'message',
-      title: 'Love Letter',
-      description: 'A heartfelt message written with pure love and admiration for the amazing person you are',
+      title: 'Heartfelt Message',
+      description: 'A special message written just for you with love and care',
       emoji: '💌',
-      gradient: 'bg-gradient-to-br from-neon-pink to-neon-purple',
-      component: HeartfeltMessage
+      gradient: 'from-pink-400 via-rose-400 to-red-400'
     },
     {
       id: 'photos',
-      title: 'Memory Lane',
-      description: 'Beautiful moments captured in time, each telling a story of joy and friendship',
-      emoji: '📷',
-      gradient: 'bg-gradient-to-br from-neon-blue to-neon-green',
-      component: PhotoCarousel
+      title: 'Photo Memories',
+      description: 'Beautiful moments captured and cherished forever',
+      emoji: '📸',
+      gradient: 'from-blue-400 via-cyan-400 to-teal-400'
     },
     {
       id: 'video',
-      title: 'Special Message',
-      description: 'A personalized video message created with love, just for your special day',
+      title: 'Special Video',
+      description: 'A personalized birthday message created with love',
       emoji: '🎬',
-      gradient: 'bg-gradient-to-br from-neon-purple to-neon-pink',
-      component: VideoPlayer
+      gradient: 'from-purple-400 via-violet-400 to-indigo-400'
     },
     {
       id: 'quiz',
-      title: 'Fun Challenge',
-      description: 'Test how well we know each other with this fun and interactive birthday quiz',
+      title: 'Fun Quiz',
+      description: 'Test how well we know each other with this fun quiz',
       emoji: '🎯',
-      gradient: 'bg-gradient-to-br from-neon-green to-neon-blue',
-      component: Quiz
+      gradient: 'from-green-400 via-emerald-400 to-teal-400'
     },
     {
       id: 'wishes',
-      title: 'Wish Collection',
-      description: 'Leave your birthday wishes and see the beautiful messages from everyone who loves you',
+      title: 'Wishes Collection',
+      description: 'Leave your birthday wishes and see what others have written',
       emoji: '🌟',
-      gradient: 'bg-gradient-to-br from-neon-yellow to-neon-pink',
-      component: WishesWall
+      gradient: 'from-yellow-400 via-orange-400 to-red-400'
     },
     {
       id: 'gift',
-      title: 'Magical Surprise',
-      description: 'A special surprise waiting to be unwrapped, filled with love and birthday magic',
+      title: 'Surprise Gift',
+      description: 'A special surprise waiting to be unwrapped',
       emoji: '🎁',
-      gradient: 'bg-gradient-to-br from-neon-pink to-neon-blue',
-      component: GiftBox
+      gradient: 'from-fuchsia-400 via-pink-400 to-rose-400'
     }
   ]
 
@@ -106,7 +92,7 @@ function App() {
 
   const triggerConfetti = () => {
     setShowConfetti(true)
-    setTimeout(() => setShowConfetti(false), 8000)
+    setTimeout(() => setShowConfetti(false), 5000)
   }
 
   const renderSection = () => {
@@ -116,37 +102,23 @@ function App() {
           <>
             <Hero onOpenGift={triggerConfetti} />
             
-            {/* Interactive Cards Section */}
-            <section className="py-32 px-4 relative">
-              <div className="absolute inset-0 gradient-mesh opacity-10" />
-              
-              <div className="max-w-7xl mx-auto relative z-10">
+            <section className="py-20 px-4">
+              <div className="max-w-6xl mx-auto">
                 <motion.div
-                  initial={{ opacity: 0, y: 50 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="text-center mb-20"
+                  transition={{ duration: 0.6 }}
+                  className="text-center mb-16"
                 >
-                  <motion.div
-                    className="text-8xl mb-8 inline-block"
-                    animate={{ 
-                      rotate: [0, 10, -10, 0],
-                      scale: [1, 1.2, 1]
-                    }}
-                    transition={{ duration: 4, repeat: Infinity }}
-                  >
-                    ✨
-                  </motion.div>
-                  
-                  <h2 className="text-6xl font-space font-bold gradient-text mb-8">
-                    Explore the Magic
+                  <h2 className="text-5xl font-display font-bold text-white mb-6">
+                    Explore & Discover ✨
                   </h2>
-                  <p className="text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                    Click on any card below to discover the special surprises we've prepared for your birthday celebration
+                  <p className="text-xl text-white/80 max-w-2xl mx-auto">
+                    Click on any card below to explore different sections
                   </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {cards.map((card, index) => (
                     <Card
                       key={card.id}
@@ -175,101 +147,40 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-bg text-white relative overflow-hidden">
-      {/* Navigation */}
-      <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 glass-dark"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-      >
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex justify-between items-center">
-            {/* Logo */}
-            <motion.div
-              className="flex items-center gap-3"
-              whileHover={{ scale: 1.05 }}
-            >
-              <motion.span
-                className="text-3xl"
-                animate={{ rotate: [0, 15, -15, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                🎂
-              </motion.span>
-              <span className="text-2xl font-space font-bold gradient-text">
-                Shweta's Birthday
-              </span>
-            </motion.div>
+    <div className="min-h-screen relative">
+      <Navbar 
+        currentSection={currentSection} 
+        onSectionChange={setCurrentSection} 
+      />
 
-            {/* Navigation items */}
-            <div className="hidden md:flex items-center gap-2">
-              {sections.map((section, index) => (
-                <motion.button
-                  key={section.id}
-                  onClick={() => setCurrentSection(section.id)}
-                  className={`px-6 py-3 rounded-2xl transition-all duration-300 flex items-center gap-2 font-medium ${
-                    currentSection === section.id
-                      ? 'bg-gradient-to-r from-neon-pink to-neon-blue text-white shadow-neon'
-                      : 'text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7 + index * 0.1 }}
-                >
-                  <span className="text-lg">{section.emoji}</span>
-                  {section.label}
-                </motion.button>
-              ))}
-            </div>
-
-            {/* Mobile menu button */}
-            <motion.button
-              className="md:hidden glass p-3 rounded-2xl"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <span className="text-2xl">☰</span>
-            </motion.button>
-          </div>
-        </div>
-      </motion.nav>
-
-      {/* Confetti */}
       {showConfetti && (
         <Confetti
           width={windowSize.width}
           height={windowSize.height}
           recycle={false}
-          numberOfPieces={500}
-          colors={['#ff0080', '#00d4ff', '#8b5cf6', '#00ff88', '#ffff00']}
-          gravity={0.1}
+          numberOfPieces={200}
         />
       )}
 
-      {/* Main Content */}
       <main className="pt-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSection}
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.6, type: "spring" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
           >
             {renderSection()}
           </motion.div>
         </AnimatePresence>
       </main>
 
-      {/* Floating Audio Toggle */}
       <motion.div
-        className="fixed bottom-8 right-8 z-40"
-        initial={{ scale: 0, rotate: -180 }}
-        animate={{ scale: 1, rotate: 0 }}
-        transition={{ delay: 2, duration: 0.8, type: "spring" }}
+        className="fixed bottom-6 right-6 z-40"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ delay: 2 }}
       >
         <AudioToggle 
           audioOn={audioEnabled} 
@@ -277,7 +188,6 @@ function App() {
         />
       </motion.div>
 
-      {/* Modals */}
       <AnimatePresence>
         {activeModal && (
           <Modal onClose={closeModal}>
@@ -291,88 +201,34 @@ function App() {
         )}
       </AnimatePresence>
 
-      {/* Footer */}
-      <footer className="py-20 px-4 relative">
-        <div className="absolute inset-0 gradient-mesh opacity-5" />
-        
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <motion.div
-            className="glass-dark p-12 rounded-3xl"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="flex justify-center items-center gap-6 mb-8">
-              <motion.span
-                className="text-4xl"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                💝
-              </motion.span>
-              <span className="text-2xl font-space gradient-text">
-                Made with infinite love for Shweta
+      <footer className="py-16 px-4 text-center">
+        <div className="max-w-4xl mx-auto">
+          <div className="glass p-8 rounded-3xl">
+            <div className="flex justify-center items-center gap-4 mb-6">
+              <span className="text-3xl">💝</span>
+              <span className="text-xl font-display text-white">
+                Made with love for Shweta
               </span>
-              <motion.span
-                className="text-4xl"
-                animate={{ rotate: [0, 15, -15, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                🎂
-              </motion.span>
+              <span className="text-3xl">🎂</span>
             </div>
             
-            <div className="flex justify-center gap-6 mb-8">
-              <motion.button
-                className="btn-neon px-8 py-4"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                📱 Share the Magic
-              </motion.button>
-              <motion.button
-                className="btn-neon px-8 py-4"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                🖨️ Print Memories
-              </motion.button>
+            <div className="flex justify-center gap-4 mb-6">
+              <button className="px-8 py-4 bg-gradient-to-r from-primary to-purple text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+                📱 Share
+              </button>
+              <button className="px-8 py-4 bg-gradient-to-r from-secondary to-orange text-white font-bold rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+                🖨️ Print
+              </button>
             </div>
             
-            <motion.p
-              className="text-lg text-gray-300"
-              animate={{ opacity: [0.7, 1, 0.7] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              December 9th, 2024 • Happy Birthday Shweta! 🎉✨🌟
-            </motion.p>
-          </motion.div>
+            <p className="text-white/80">
+              December 9th, 2024 • Happy Birthday Shweta! 🎉
+            </p>
+          </div>
         </div>
       </footer>
 
-      {/* Mobile bottom navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden">
-        <div className="glass-dark p-4">
-          <div className="flex justify-around">
-            {sections.map((section) => (
-              <motion.button
-                key={section.id}
-                onClick={() => setCurrentSection(section.id)}
-                className={`flex flex-col items-center py-2 px-4 rounded-xl transition-all ${
-                  currentSection === section.id
-                    ? 'text-neon-pink'
-                    : 'text-gray-400'
-                }`}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <span className="text-2xl mb-1">{section.emoji}</span>
-                <span className="text-xs font-medium">{section.label}</span>
-              </motion.button>
-            ))}
-          </div>
-        </div>
-      </div>
+      <div className="h-20 md:hidden" />
     </div>
   )
 }

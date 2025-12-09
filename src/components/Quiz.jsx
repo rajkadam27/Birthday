@@ -7,7 +7,6 @@ const Quiz = ({ onPerfectScore }) => {
   const [showResults, setShowResults] = useState(false)
   const [score, setScore] = useState(0)
 
-  // TODO: PERSONALIZE - Update these questions with real facts about Shweta
   const questions = [
     {
       question: "What's Shweta's favorite color?",
@@ -67,97 +66,71 @@ const Quiz = ({ onPerfectScore }) => {
 
   if (showResults) {
     return (
-      <div className="max-w-2xl mx-auto text-center">
+      <div className="max-w-2xl mx-auto text-center p-8">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="mb-8"
         >
-          <h2 className="text-3xl font-poppins font-bold text-gray-800 mb-4">
-            🎯 Quiz Results
-          </h2>
-          
-          <div className="bg-gradient-to-br from-peach/10 to-coral/10 rounded-2xl p-8 border border-peach/20">
-            <motion.div
-              className="text-6xl mb-4"
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              {score === questions.length ? '🏆' : score >= questions.length / 2 ? '🌟' : '💝'}
-            </motion.div>
-            
-            <h3 className="text-2xl font-poppins font-bold text-gray-800 mb-2">
-              You scored {score} out of {questions.length}!
-            </h3>
-            
-            <p className="text-gray-600 font-inter mb-6">
-              {score === questions.length 
-                ? "Perfect! You know Shweta so well! 🎉" 
-                : score >= questions.length / 2 
-                ? "Great job! You're a wonderful friend! 😊"
-                : "Every friendship is special in its own way! 💕"}
-            </p>
-
-            {/* Show explanations */}
-            <div className="space-y-4 mb-6">
-              {questions.map((q, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                  className="text-left bg-white/50 rounded-lg p-4"
-                >
-                  <p className="font-semibold text-gray-800 mb-1">
-                    {q.question}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {q.explanation}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-            
-            <button
-              onClick={resetQuiz}
-              className="px-6 py-3 bg-gradient-to-r from-peach to-coral text-white font-poppins font-semibold rounded-full hover:shadow-lg transition-all"
-            >
-              Take Quiz Again
-            </button>
+          <div className="text-8xl mb-6">
+            {score === questions.length ? '🏆' : score >= questions.length / 2 ? '🌟' : '💝'}
           </div>
+          
+          <h3 className="text-4xl font-display font-bold text-gray-900 mb-4">
+            Score: {score}/{questions.length}
+          </h3>
+          
+          <p className="text-xl text-gray-700 mb-8">
+            {score === questions.length 
+              ? "Perfect! You know Shweta so well! 🎉" 
+              : score >= questions.length / 2 
+              ? "Great job! You're a wonderful friend! 😊"
+              : "Every friendship is special in its own way! 💕"}
+          </p>
+
+          <div className="space-y-4 mb-8">
+            {questions.map((q, index) => (
+              <div key={index} className="bg-white p-6 rounded-xl shadow-lg text-left">
+                <p className="font-bold text-gray-900 mb-2">{q.question}</p>
+                <p className="text-gray-700">{q.explanation}</p>
+              </div>
+            ))}
+          </div>
+          
+          <button
+            onClick={resetQuiz}
+            className="px-10 py-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-xl rounded-full shadow-2xl hover:shadow-purple-500/50 hover:scale-110 transition-all"
+          >
+            🔄 Take Quiz Again
+          </button>
         </motion.div>
       </div>
     )
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8"
-      >
-        <h2 className="text-3xl font-poppins font-bold text-gray-800 mb-4">
+    <div className="max-w-2xl mx-auto p-8">
+      <div className="text-center mb-8">
+        <h2 className="text-4xl font-display font-bold text-gray-900 mb-6">
           🎯 How Well Do You Know Shweta?
         </h2>
-        <div className="flex justify-center items-center space-x-2 mb-4">
+        <div className="flex justify-center items-center space-x-3 mb-4">
           {questions.map((_, index) => (
             <div
               key={index}
-              className={`w-3 h-3 rounded-full ${
+              className={`w-4 h-4 rounded-full transition-all ${
                 index === currentQuestion 
-                  ? 'bg-coral' 
+                  ? 'bg-purple-500 scale-125' 
                   : index < currentQuestion 
-                  ? 'bg-peach' 
-                  : 'bg-gray-200'
+                  ? 'bg-green-500' 
+                  : 'bg-gray-300'
               }`}
             />
           ))}
         </div>
-        <p className="text-gray-600 font-inter">
+        <p className="text-xl text-gray-700 font-bold">
           Question {currentQuestion + 1} of {questions.length}
         </p>
-      </motion.div>
+      </div>
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -165,27 +138,25 @@ const Quiz = ({ onPerfectScore }) => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -50 }}
-          className="bg-white rounded-2xl shadow-lg p-8"
+          className="bg-white rounded-2xl shadow-2xl p-8"
         >
-          <h3 className="text-xl font-poppins font-semibold text-gray-800 mb-6">
+          <h3 className="text-2xl font-bold text-gray-900 mb-8">
             {questions[currentQuestion].question}
           </h3>
           
-          <div className="space-y-3 mb-8">
+          <div className="space-y-4 mb-8">
             {questions[currentQuestion].options.map((option, index) => (
-              <motion.button
+              <button
                 key={index}
                 onClick={() => handleAnswerSelect(index)}
-                className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                className={`w-full p-5 text-left rounded-xl border-4 transition-all font-bold text-lg ${
                   selectedAnswers[currentQuestion] === index
-                    ? 'border-coral bg-coral/10 text-coral'
-                    : 'border-gray-200 hover:border-peach hover:bg-peach/5'
+                    ? 'border-purple-500 bg-purple-100 text-purple-700 scale-105'
+                    : 'border-gray-200 hover:border-purple-300 hover:bg-purple-50'
                 }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
               >
-                <span className="font-inter">{option}</span>
-              </motion.button>
+                {option}
+              </button>
             ))}
           </div>
           
@@ -193,13 +164,13 @@ const Quiz = ({ onPerfectScore }) => {
             <button
               onClick={nextQuestion}
               disabled={selectedAnswers[currentQuestion] === undefined}
-              className={`px-8 py-3 rounded-full font-poppins font-semibold transition-all ${
+              className={`px-12 py-5 rounded-full font-bold text-xl transition-all ${
                 selectedAnswers[currentQuestion] !== undefined
-                  ? 'bg-gradient-to-r from-peach to-coral text-white hover:shadow-lg'
-                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-2xl hover:shadow-purple-500/50 hover:scale-110'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}
             >
-              {currentQuestion === questions.length - 1 ? 'See Results' : 'Next Question'}
+              {currentQuestion === questions.length - 1 ? '✨ See Results' : '➡️ Next Question'}
             </button>
           </div>
         </motion.div>
